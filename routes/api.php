@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\CourseController;
-use App\Models\Course;
+use App\Http\Controllers\DepartmentController;
+use App\Http\Controllers\RoleController;
+use App\Http\Controllers\YearController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -19,6 +21,18 @@ use Illuminate\Support\Facades\Route;
 Route::apiResource('courses', CourseController::class);
 
 Route::get('/courses/search/{keyword}', [CourseController::class, 'search']);
+
+Route::apiResource('departments', DepartmentController::class);
+
+Route::get('/departments/search/{keyword}', [DepartmentController::class, 'search']);
+
+Route::apiResource('years', YearController::class);
+
+Route::get('/years/search/{keyword}', [YearController::class, 'search']);
+
+Route::apiResource('roles', RoleController::class);
+
+Route::get('/roles/search/{keyword}', [RoleController::class, 'search']);
 
 //Route::get('/courses', [CourseController::class, 'index']);
 //

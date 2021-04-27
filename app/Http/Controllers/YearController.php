@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Year;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class YearController extends Controller
 {
@@ -14,7 +16,8 @@ class YearController extends Controller
      */
     public function index()
     {
-        //
+        $yr = Year::orderBy('id', 'DESC')->get();
+        return response()->json($yr);
     }
 
     /**
@@ -35,7 +38,18 @@ class YearController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+           'year_date' => 'required|numeric|unique:years'
+        ]);
+        if ($validator->fails()) {
+            return response()->json($validator->errors());
+        }
+        $yr = new Year();
+        $yr->year_date = $request->year_date;
+        if ($yr->save()) {
+            return response()->json($yr, 201);
+        }
+        return response()->json(['error' => 'Failed!']);
     }
 
     /**
@@ -46,7 +60,8 @@ class YearController extends Controller
      */
     public function show(Year $year)
     {
-        //
+        $yr = Year::find($year->id)->get();
+        return response()->json($yr);
     }
 
     /**
@@ -69,7 +84,18 @@ class YearController extends Controller
      */
     public function update(Request $request, Year $year)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'year_date' => 'required|numeric'
+        ]);
+        if ($validator->fails()) {
+            return response()->json($validator->errors());
+        }
+        $yr = Year::find($year->id);
+        $yr->year_date = $request->year_date;
+        if ($yr->update()) {
+            return response()->json($yr, 201);
+        }
+        return response()->json(['error' => 'Failed!']);
     }
 
     /**
@@ -80,6 +106,16 @@ class YearController extends Controller
      */
     public function destroy(Year $year)
     {
-        //
+        $yr = Year::find($year->id);
+        if ($yr->delete()) {
+            return response()->json($yr, 201);
+        }
+        return response()->json(['error' => 'Failed!']);
+    }
+
+    public function search($keyword)
+    {
+        $yr = Year::where('year_date', 'like', '%'.$keyword.'%')->get();
+        return response()->json($yr);
     }
 }
