@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\DepartmentController;
+use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\YearController;
 use Illuminate\Http\Request;
@@ -33,6 +34,12 @@ Route::get('/years/search/{keyword}', [YearController::class, 'search']);
 Route::apiResource('roles', RoleController::class);
 
 Route::get('/roles/search/{keyword}', [RoleController::class, 'search']);
+
+Route::apiResource('questions', QuestionController::class);
+
+Route::get('/questions/search/{year}/{course}', [QuestionController::class, 'search']);
+
+Route::get('/questions/download/{filename}/', [QuestionController::class, 'download']);
 
 //Route::get('/courses', [CourseController::class, 'index']);
 //

@@ -17,6 +17,7 @@ class RoleController extends Controller
     public function index()
     {
         $role = Role::orderBy('id', 'DESC')->get();
+        return response()->json($role);
     }
 
     /**
@@ -85,7 +86,7 @@ class RoleController extends Controller
     public function update(Request $request, Role $role)
     {
         $validator = Validator::make($request->all(), [
-            'role_name' => 'required|string|max:255|unique:roles'
+            'role_name' => 'required|string|max:255'
         ]);
         if ($validator->fails()) {
             return response()->json($validator->errors());
