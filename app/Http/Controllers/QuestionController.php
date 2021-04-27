@@ -141,6 +141,6 @@ class QuestionController extends Controller
 
     public function download($filename)
     {
-        return response()->download($filename);
+        return response()->download(public_path('uploads/questions/'.$filename));
     }
 }
