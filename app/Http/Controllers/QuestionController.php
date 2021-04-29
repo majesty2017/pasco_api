@@ -133,9 +133,14 @@ class QuestionController extends Controller
         return response()->json(['error', 'Failed']);
     }
 
-    public function search($year = null, $department_id = null)
+    public function search($department_id = null, $year = null)
     {
-        $question = Question::where('department_id', $department_id)->where('year_id', $year)->with('year')->with('course')->get();
+        $question = Question::where('department_id', $department_id)
+            ->where('year_id', $year)
+            ->with('year')
+            ->with('course')
+            ->with('department')
+            ->get();
         return response()->json($question);
     }
 
