@@ -117,7 +117,7 @@ class RoleController extends Controller
 
     public function search($keyword)
     {
-        $role = Role::where('role_name', 'like', '%'.$keyword.'%');
+        $role = Role::where('role_name', 'like', '%'.$keyword.'%')->get();
         return response()->json($role);
     }
 }
