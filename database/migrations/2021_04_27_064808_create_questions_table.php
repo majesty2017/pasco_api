@@ -15,10 +15,10 @@ class CreateQuestionsTable extends Migration
     {
         Schema::create('questions', function (Blueprint $table) {
             $table->id();
-            $table->string('department_id');
-            $table->string('year_id');
-            $table->string('course_id');
-            $table->string('files');
+            $table->integer('department_id')->nullable();
+            $table->integer('year_id')->nullable();
+            $table->integer('course_id')->nullable();
+            $table->string('files')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

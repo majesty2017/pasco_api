@@ -38,12 +38,12 @@ class QuestionController extends Controller
      */
     public function store(Request $request)
     {
-        $v = Validator::make($request->all(), [
-           'files' => 'required|mimes: jpg,jpeg,png,svg,doc,docx,pdf',
-        ]);
-        if ($v->fails()) {
-            return response()->json($v);
-        }
+//        $v = Validator::make($request->all(), [
+//           'files' => 'required|mimes: jpg,jpeg,png,svg,doc,docx,pdf',
+//        ]);
+//        if ($v->fails()) {
+//            return response()->json($v);
+//        }
         $question = new Question();
         $question->department_id = $request->department_id;
         $question->year_id = $request->year_id;
@@ -94,12 +94,12 @@ class QuestionController extends Controller
      */
     public function update(Request $request, Question $question)
     {
-        $v = Validator::make($request->all(), [
-            'files' => 'required|mimes: jpg,jpeg,png,svg,doc,docx,pdf',
-        ]);
-        if ($v->fails()) {
-            return response()->json($v);
-        }
+//        $v = Validator::make($request->all(), [
+//            'files' => 'required|mimes: jpg,jpeg,png,svg,doc,docx,pdf',
+//        ]);
+//        if ($v->fails()) {
+//            return response()->json($v);
+//        }
         $question = Question::find($question->id);
         $question->department_id = $request->department_id;
         $question->year_id = $request->year_id;
@@ -133,9 +133,9 @@ class QuestionController extends Controller
         return response()->json(['error', 'Failed']);
     }
 
-    public function search($year = null, $course = null)
+    public function search($year = null, $department_id = null)
     {
-        $question = Question::where('year_id', $year)->where('course_id', $course)->get();
+        $question = Question::where('department_id', $department_id)->where('year_id', $year)->with('year')->with('course')->get();
         return response()->json($question);
     }
 
